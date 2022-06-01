@@ -1,18 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class InappWebViewPage extends StatefulWidget {
   const InappWebViewPage({Key? key}) : super(key: key);
 
   @override
-  _InappWebViewPageState createState() => _InappWebViewPageState();
+  InappWebViewPageState createState() => InappWebViewPageState();
 }
 
-class _InappWebViewPageState extends State<InappWebViewPage> {
+class InappWebViewPageState extends State<InappWebViewPage> {
   final GlobalKey webviewKey = GlobalKey();
   InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
     crossPlatform: InAppWebViewOptions(
@@ -60,19 +58,19 @@ class _InappWebViewPageState extends State<InappWebViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Official InappWebView websiste"),
+        title: const Text("Official InappWebView websiste"),
       ),
       body: SafeArea(
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
+              decoration: const InputDecoration(prefixIcon: Icon(Icons.search)),
               controller: urlController,
               keyboardType: TextInputType.url,
               onSubmitted: (value) {
                 var url = Uri.parse(value);
                 if (url.scheme.isEmpty) {
-                  url = Uri.parse("https://www.google.com/search?q=" + value);
+                  url = Uri.parse("https://www.google.com/search?q=$value");
                 }
                 webViewController?.loadUrl(urlRequest: URLRequest(url: url));
               },
@@ -117,7 +115,7 @@ class _InappWebViewPageState extends State<InappWebViewPage> {
                       }
                       setState(() {
                         this.progress = progress / 100;
-                        urlController.text = this.url;
+                        urlController.text = url;
                       });
                     },
                     onUpdateVisitedHistory: (controller, url, androidIsReload) {
@@ -127,7 +125,7 @@ class _InappWebViewPageState extends State<InappWebViewPage> {
                       });
                     },
                     onConsoleMessage: (controller, consoleMessage) {
-                      print(consoleMessage);
+                      // print(consoleMessage);
                     },
                   ),
                   progress < 1.0
@@ -143,15 +141,15 @@ class _InappWebViewPageState extends State<InappWebViewPage> {
                   onPressed: () {
                     webViewController?.goBack();
                   },
-                  child: Icon(Icons.arrow_back),
+                  child: const Icon(Icons.arrow_back),
                 ),                    ElevatedButton(
-                  child: Icon(Icons.arrow_forward),
+                  child: const Icon(Icons.arrow_forward),
                   onPressed: () {
                     webViewController?.goForward();
                   },
                 ),
                 ElevatedButton(
-                  child: Icon(Icons.refresh),
+                  child: const Icon(Icons.refresh),
                   onPressed: () {
                     webViewController?.reload();
                   },
